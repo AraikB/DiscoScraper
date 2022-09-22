@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='Distutils',
-      version='1.1',
+      version='1.11',
       description='LandRover Disco Scraper',
       author='Araik Barouni',
       author_email='araikb@gmail.com',
