@@ -25,8 +25,11 @@ class Car:
 
 
 
-car_strings = r">(\d\d\d?\d?) (\w+-?\w+?) (\w+-?\w+?)<"
+pyp_car_string_query = r">(\d\d\d?\d?) (\w+-?\w+?) (\w+-?\w+?)<"
 
-next_page_string = r'<a class=\"button pypvi_pageButton\" href=\"([\?=\/\w-]+)\">Next Page'
+pyp_next_page_query = r'<a class=\"button pypvi_pageButton\" href=\"([\?=\/\w-]+)\">Next Page'
 
-store_string = r'/parts/([\w\-\d]+)/'
+pyp_store_query = r'/parts/([\w\-\d]+)/'
+
+
+pyp_zip_store_query = r'\"Zip\":\"(\d+)\"[,\"\w:() -.{/]+/parts/([-\w]+)'
