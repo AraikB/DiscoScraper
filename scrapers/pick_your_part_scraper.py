@@ -5,7 +5,7 @@ from common.helper_functions import filter_found_cars
 import requests
 import re 
 from pyzipcode import ZipCodeDatabase
-
+import time
 
 
 def build_cars(location_code:str, min_year:int, max_year:int, query_make:str, query_model:str):
@@ -15,17 +15,18 @@ def build_cars(location_code:str, min_year:int, max_year:int, query_make:str, qu
     base_url ='https://www.lkqpickyourpart.com'
     html = requests.get(url).text
     found_cars = [Car(year=year, make=make, model=model) for year, make, model in  re.findall(pyp_car_string_query, html)]
-    if filter_found_cars(found_cars, min_year, max_year, query_make, query_model):
-        all_cars.extend(found_cars)
+    if found_cars :=filter_found_cars(found_cars, min_year, max_year, query_make, query_model):
+        print({f"{car.year} {car.make} {car.model}":url for car in found_cars})
+        all_cars.extend({f"{car.year} {car.make} {car.model}":url for car in found_cars})
     while next_page_link:=re.findall(pyp_next_page_query, html):
-        print(next_page_link)
+        
         url = base_url+next_page_link[0]+limit_str   
         html = requests.get(url).text
         found_cars = [Car(year=year, make=make, model=model) for year, make, model in re.findall(pyp_car_string_query, html)]
-        if filter_found_cars(found_cars, min_year, max_year, query_make, query_model):
+        if found_cars := filter_found_cars(found_cars, min_year, max_year, query_make, query_model):
             print('Found a disco!')
-            print(found_cars)
-            all_cars.extend(found_cars)
+            print({f"{car.year} {car.make} {car.model}":url for car in found_cars})
+            all_cars.extend({f"{car.year} {car.make} {car.model}":url for car in found_cars})
     return all_cars 
 
 

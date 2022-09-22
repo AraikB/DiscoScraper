@@ -10,6 +10,6 @@ def runner(min_year, max_year, make, model, zip_code):
 if __name__ == "__main__": 
     min_year = 1994
     max_year = 2006
-    make = "LAND ROVER"
-    model = 'DISCOVERY' 
+    make = "HONDA"
+    model = 'ACCORD' 
     print(runner(min_year=min_year, max_year=max_year, make=make, model=model, zip_code=91605))
