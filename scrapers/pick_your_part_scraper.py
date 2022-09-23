@@ -5,7 +5,6 @@ from common.helper_functions import filter_found_cars
 import requests
 import re 
 from pyzipcode import ZipCodeDatabase
-import time
 
 
 def build_cars(location_code:str, min_year:int, max_year:int, query_make:str, query_model:str):
@@ -32,12 +31,10 @@ def build_cars(location_code:str, min_year:int, max_year:int, query_make:str, qu
 
 
 def get_stores_in_zip_code(zip_code):
-    zcdb = ZipCodeDatabase()
-    in_radius = [z.zip for z in zcdb.get_zipcodes_around_radius(zip_code, 50)] # ('ZIP', radius in miles)
-    radius_utf = [x for x in in_radius] # unicode list to utf list
+    zip_code_db = ZipCodeDatabase()
+    zips_in_radius = [z.zip for z in zip_code_db.get_zipcodes_around_radius(zip_code, 50)] 
     stores = requests.get(f'https://www.lkqpickyourpart.com/Location/?ZIP={zip_code}&Range=50')
-    stores= [store for zip, store in re.findall(pyp_zip_store_query, stores.text) if zip in radius_utf]
-
+    stores= [store for zip, store in re.findall(pyp_zip_store_query, stores.text) if zip in zips_in_radius]
     return stores
 
 def main(min_year,max_year, query_make, query_model, zip_code):
